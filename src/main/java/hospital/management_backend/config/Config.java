@@ -22,33 +22,32 @@ public class Config {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Enable CORS
-                .csrf(csrf -> csrf.disable())  // ✅ Disable CSRF for API security
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // ✅ Stateless session
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login", "/user/create").permitAll()  // ✅ Allow login & signup without authentication
-                        .anyRequest().authenticated()  // ✅ Secure other endpoints
+                        .requestMatchers("/user/login" , "/user/create" , "/user/logout" , "/appointment/saveAppointment").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .httpBasic(AbstractHttpConfigurer::disable); // ✅ Correct way to disable HTTP Basic Auth
-
+                .httpBasic(AbstractHttpConfigurer::disable);
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // ✅ Use Bcrypt for password hashing
+        return new BCryptPasswordEncoder(); //
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // ✅ Allow frontend React port
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ✅ Allow all HTTP methods
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // ✅ Allow necessary headers
-        configuration.setAllowCredentials(true); // ✅ Allow cookies/session sharing
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); //
+        configuration.setAllowedMethods(List.of("GET" , "POST" , "PUT" , "DELETE" , "OPTIONS")); //
+        configuration.setAllowedHeaders(List.of("Authorization" , "Content-Type")); //
+        configuration.setAllowCredentials(true); //
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**" , configuration);
         return source;
     }
 }

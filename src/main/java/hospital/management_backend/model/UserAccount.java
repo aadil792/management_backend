@@ -17,6 +17,4 @@ public class UserAccount {
     private String password;
     private String address;
     private String phone;
-
-
 }
