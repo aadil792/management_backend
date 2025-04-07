@@ -24,9 +24,11 @@ public class Config {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy
+                        (SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login" , "/user/create" , "/user/logout" , "/appointment/saveAppointment").permitAll()
+                        .requestMatchers("/user/login" , "/user/create" , "/user/logout" ,"user/delete",
+                                "/appointment/saveAppointment" ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(AbstractHttpConfigurer::disable);

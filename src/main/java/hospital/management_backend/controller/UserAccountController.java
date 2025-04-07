@@ -28,9 +28,14 @@ public class UserAccountController {
     public ResponseEntity<String> delete(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         String password = request.get("password");
-        String message = service.deleteByEmail(email, password);
+        String message = service.deleteByEmail(email , password);
         return ResponseEntity.ok(message);
+
     }
+
+
+
+
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
