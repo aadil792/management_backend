@@ -19,4 +19,11 @@ public class DoctorController {
         Doctor done= doctorServiceImp.addDoctor(doctor);
         return ResponseEntity.ok(done);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDoctor(@PathVariable Long id) {
+        doctorServiceImp.deleteDoctor(id);
+        return ResponseEntity.ok("Doctor deleted successfully");
+    }
+
 }
