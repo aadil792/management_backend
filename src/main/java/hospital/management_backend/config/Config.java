@@ -23,15 +23,19 @@ public class Config {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) // Allow sessions!
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login" , "/user/create" , "/user/logout" , "/appointment/saveAppointment", "/api/doctors/add").permitAll()
+                        .requestMatchers("/user/**", "/appointment/**").permitAll()
+                        .requestMatchers("/user/get-name").authenticated()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
