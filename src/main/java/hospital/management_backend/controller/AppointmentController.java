@@ -2,7 +2,6 @@ package hospital.management_backend.controller;
 
 
 import hospital.management_backend.model.Appointment;
-import hospital.management_backend.repository.AppointmentRepository;
 import hospital.management_backend.service.AppointmentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,7 @@ public class AppointmentController {
 
     @PostMapping("/saveAppointment")
     ResponseEntity<Appointment> save(@RequestBody Appointment appointment) {
-
         Appointment done = services.create(appointment);
-
         return ResponseEntity.ok(done);
 
     }
