@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.Data;
+
 
 @Entity
 public class UserAccount {
@@ -20,13 +21,13 @@ public class UserAccount {
     public UserAccount() {
     }
 
-    public UserAccount(long id , String email , String name , String password , String address , String phone) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.address = address;
+    public UserAccount(String phone , String address , String password , String name , String email , long id) {
         this.phone = phone;
+        this.address = address;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.id = id;
     }
 
     public long getId() {
@@ -75,5 +76,17 @@ public class UserAccount {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }
