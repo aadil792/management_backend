@@ -18,6 +18,9 @@ public class UserAccount {
     private String address;
     private String phone;
 
+    public UserAccount() {
+    }
+
     public UserAccount(String phone , String address , String password , String name , String email , long id) {
         this.phone = phone;
         this.address = address;
