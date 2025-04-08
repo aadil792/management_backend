@@ -5,6 +5,7 @@ import hospital.management_backend.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,13 +19,14 @@ public class AppointmentServiceImp implements AppointmentService{
     }
 
     @Override
-    public void deleteAppointment(Appointment appointment) {
-          appointmentRepository.delete(appointment);
+    public void deleteAppointmentById(Long id) {
+        appointmentRepository.deleteById(id);
     }
 
+
     @Override
-    public Optional<Appointment> getAllList() {
-        return Optional.empty();
+    public List<Appointment> getAllList() {
+        return appointmentRepository.findAll();
     }
 
 

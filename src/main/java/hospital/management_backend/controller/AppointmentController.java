@@ -5,10 +5,9 @@ import hospital.management_backend.model.Appointment;
 import hospital.management_backend.service.AppointmentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/appointment")
@@ -23,6 +22,16 @@ public class AppointmentController {
         Appointment done = services.create(appointment);
         return ResponseEntity.ok(done);
 
+    }
+    @GetMapping("/getAllList")
+    public List<Appointment> getALl(){
+        return services.getAllList();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public  ResponseEntity<String>  delete (@PathVariable Long id){
+        services.deleteAppointmentById(id);
+        return ResponseEntity.ok("Deleted Successful ");
     }
 
 
