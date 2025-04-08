@@ -1,6 +1,4 @@
 package hospital.management_backend.controller;
-
-import hospital.management_backend.dto.LoginRequest;
 import hospital.management_backend.model.UserAccount;
 import hospital.management_backend.service.UserServiceImp;
 import jakarta.servlet.http.HttpSession;
@@ -33,14 +31,12 @@ public class UserAccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
-        Optional<UserAccount> userOptional = service.findByMail(loginRequest.getEmail());
-
+    public ResponseEntity<String> login(@RequestBody UserAccount userAccount, HttpSession session) {
+        Optional<UserAccount> userOptional = service.findByMail(userAccount.getEmail());
         if (userOptional.isPresent()) {
             UserAccount user = userOptional.get();
-
-            if (service.authenticate(loginRequest.getEmail(), loginRequest.getPassword())) {
-                // ✅ Store user session
+            if (service.authenticate(userAccount.getEmail(), userAccount.getPassword())) {
+                //  Store user session
                 session.setAttribute("user", user);
                 return ResponseEntity.ok("Login successful");
             }
@@ -51,7 +47,7 @@ public class UserAccountController {
 
     @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {
-        session.invalidate(); // ✅ Destroy session
+        session.invalidate(); //  Destroy session
         return ResponseEntity.ok("Logged out successfully");
     }
 
