@@ -24,7 +24,8 @@ public class Config {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) // Allow sessions!
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) // Allow sessions!
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**", "/appointment/**").permitAll()
                         .requestMatchers("/user/get-name").authenticated()
