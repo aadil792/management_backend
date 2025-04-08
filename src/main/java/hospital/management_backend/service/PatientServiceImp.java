@@ -40,6 +40,7 @@ public class PatientServiceImp implements PatientService {
             existingPatient.setName(patientDetails.getName());
             existingPatient.setAge(patientDetails.getAge());
             existingPatient.setDisease(patientDetails.getDisease());
+            existingPatient.setRequireDoctor(patientDetails.getRequireDoctor());
             return patientRepository.save(existingPatient);
         } else {
             throw new RuntimeException("Patient not found with ID: " + id);
