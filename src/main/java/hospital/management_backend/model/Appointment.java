@@ -15,7 +15,6 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Auto-incremented ID
     private Long id;
-
     private String chooseDepartment;
     private String chooseDoctor;
     private LocalDate date;
