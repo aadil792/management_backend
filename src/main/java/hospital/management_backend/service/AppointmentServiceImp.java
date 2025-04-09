@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppointmentServiceImp implements AppointmentService{
+public class AppointmentServiceImp implements AppointmentService {
 
-    @Autowired private  AppointmentRepository appointmentRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     @Override
     public Appointment create(Appointment appointment) {
@@ -27,6 +28,24 @@ public class AppointmentServiceImp implements AppointmentService{
     @Override
     public List<Appointment> getAllList() {
         return appointmentRepository.findAll();
+    }
+
+    @Override
+    public Appointment update(Long id , Appointment appointmentDetails) {
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+        if (optionalAppointment.isPresent()) {
+            Appointment appointment = optionalAppointment.get();
+            appointment.setTime(appointmentDetails.getTime());
+            appointment.setDate(appointmentDetails.getDate());
+            return appointmentRepository.save(appointment);
+        } else {
+            throw new RuntimeException("Doctor not found with ID: " + id);
+        }
+    }
+
+    @Override
+    public Optional<Appointment> getById(Long id) {
+        return appointmentRepository.findById(id);
     }
 
 

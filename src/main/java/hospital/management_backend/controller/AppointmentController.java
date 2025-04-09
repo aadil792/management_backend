@@ -33,6 +33,14 @@ public class AppointmentController {
         services.deleteAppointmentById(id);
         return ResponseEntity.ok("Deleted Successful ");
     }
-
+    @PutMapping("/update")
+    public ResponseEntity<Appointment> update (@RequestParam Long id ,@RequestBody Appointment appointment){
+        Appointment up= services.update(id ,appointment);
+        return ResponseEntity.ok(up);
+    }
+    @GetMapping("/get/{id}")
+    public Appointment getById(@PathVariable Long id){
+        return  services.getById(id).get();
+    }
 
 }
