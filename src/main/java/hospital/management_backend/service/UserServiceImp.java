@@ -65,12 +65,10 @@ public class UserServiceImp implements UserAccountService {
 
     public boolean authenticate(String mail, String rawPassword) {
         Optional<UserAccount> userOptional = repo.findByEmail(mail);
-
         if (userOptional.isPresent()) {
             UserAccount user = userOptional.get();
             return passwordEncoder.matches(rawPassword, user.getPassword());
         }
-
         return false;
     }
 }

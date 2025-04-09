@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +59,15 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public void saveDoctor(Doctor doctor) {
-
+    public Optional<Doctor> findByEmailAndName(String email ,String name) {
+        return doctorRepository.findByEmailAndName(email,name);
+    }
+    public  Boolean auth (String email ,String rawPassword ,String name){
+        Optional<Doctor> doctorOptional=doctorRepository.findByEmailAndName(email ,name);
+        if(doctorOptional.isPresent()){
+            Doctor doctor= doctorOptional.get();
+            return passwordEncoder.matches(rawPassword,doctor.getPassword());
+        }
+        return false;
     }
 }
