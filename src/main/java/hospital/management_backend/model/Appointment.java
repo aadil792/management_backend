@@ -16,9 +16,8 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Auto-incremented ID
     private Long id;
-
-    private String chooseDepartment;
-    private String chooseDoctor;
+    private String DoctorName;
+    private String specializationDoctor;
     private LocalDate date;
     private LocalTime time;
     private String fullName;
@@ -29,10 +28,10 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(Long id , String chooseDepartment , String chooseDoctor , LocalDate date , LocalTime time , String fullName , String number , String textArea) {
+    public Appointment(Long id , String doctorName , String specializationDoctor , LocalDate date , LocalTime time , String fullName , String number , String textArea) {
         this.id = id;
-        this.chooseDepartment = chooseDepartment;
-        this.chooseDoctor = chooseDoctor;
+        DoctorName = doctorName;
+        this.specializationDoctor = specializationDoctor;
         this.date = date;
         this.time = time;
         this.fullName = fullName;
@@ -48,20 +47,20 @@ public class Appointment {
         this.id = id;
     }
 
-    public String getChooseDepartment() {
-        return chooseDepartment;
+    public String getDoctorName() {
+        return DoctorName;
     }
 
-    public void setChooseDepartment(String chooseDepartment) {
-        this.chooseDepartment = chooseDepartment;
+    public void setDoctorName(String doctorName) {
+        DoctorName = doctorName;
     }
 
-    public String getChooseDoctor() {
-        return chooseDoctor;
+    public String getSpecializationDoctor() {
+        return specializationDoctor;
     }
 
-    public void setChooseDoctor(String chooseDoctor) {
-        this.chooseDoctor = chooseDoctor;
+    public void setSpecializationDoctor(String specializationDoctor) {
+        this.specializationDoctor = specializationDoctor;
     }
 
     public LocalDate getDate() {

@@ -2,14 +2,18 @@ package hospital.management_backend.controller;
 
 import hospital.management_backend.model.Doctor;
 import hospital.management_backend.service.DoctorServiceImp;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/doctors")
 public class DoctorController {
-
 
     @Autowired
     private DoctorServiceImp doctorServiceImp;
@@ -26,4 +30,33 @@ public class DoctorController {
         return ResponseEntity.ok("Doctor deleted successfully");
     }
 
+    @PostMapping("/login")
+    public  ResponseEntity<String> login(@RequestBody Doctor doctor, HttpSession session){
+        Optional<Doctor> exit=doctorServiceImp.findByEmailAndName(doctor.getEmail() ,doctor.getName());
+        if(exit.isPresent()){
+            Doctor add=exit.get();
+            if(doctorServiceImp.auth(add.getEmail() , add.getName() ,add.getPassword()));
+            session.setAttribute("user" ,add);
+            return ResponseEntity.ok("Login Done");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("login failed");
+    }
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout (HttpSession session){
+        session.invalidate();
+        return  ResponseEntity.ok("logout");
+    }
+    @GetMapping("/check-session")
+    public ResponseEntity<Boolean> checkSession(HttpSession session) {
+        return ResponseEntity.ok(session.getAttribute("user") != null);
+    }
+    @GetMapping("/get-name")
+    public ResponseEntity<?> getName (HttpSession session){
+        Doctor doctor =(Doctor) session.getAttribute("user");
+        if(doctor !=null){
+            return ResponseEntity.ok(Collections.singletonMap("name",doctor.getName()));
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("did not found name");
+        }
+    }
 }

@@ -2,6 +2,7 @@ package hospital.management_backend.service;
 
 import hospital.management_backend.model.Doctor;
 import java.util.List;
+import java.util.Optional;
 
 public interface DoctorService
 {
@@ -15,6 +16,8 @@ public interface DoctorService
 
     void deleteDoctor(Long id);
 
-    void saveDoctor(Doctor doctor);
+    Optional<Doctor> findByEmailAndName (String email ,String name);
+
+//    void saveDoctor(Doctor doctor);
 }
 
