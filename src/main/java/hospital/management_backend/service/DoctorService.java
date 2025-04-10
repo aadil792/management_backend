@@ -7,17 +7,11 @@ import java.util.Optional;
 public interface DoctorService
 {
     Doctor addDoctor(Doctor doctor);
-
     List<Doctor> getAllDoctors();
-
     Doctor getDoctorById(Long id);
-
     Doctor updateDoctor(Long id, Doctor doctorDetails);
-
     void deleteDoctor(Long id);
-
-    Optional<Doctor> findByEmailAndName (String email ,String name);
-
+    Optional<Doctor> findByEmailAndDoctorName (String email ,String doctorName);
 //    void saveDoctor(Doctor doctor);
 }
 

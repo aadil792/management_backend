@@ -1,12 +1,13 @@
 package hospital.management_backend.service;
 
+import hospital.management_backend.model.Appointment;
 import hospital.management_backend.model.Doctor;
+import hospital.management_backend.repository.AppointmentRepository;
 import hospital.management_backend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ public class DoctorServiceImp implements DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,8 +46,8 @@ public class DoctorServiceImp implements DoctorService {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(Math.toIntExact(id));
         if (optionalDoctor.isPresent()) {
             Doctor existingDoctor = optionalDoctor.get();
-            existingDoctor.setName(doctorDetails.getName());
-            existingDoctor.setSpeciality(doctorDetails.getSpeciality());
+            existingDoctor.setDoctorName(doctorDetails.getDoctorName());
+            existingDoctor.setSpecializationDoctor(doctorDetails.getSpecializationDoctor());
             existingDoctor.setPassword(doctorDetails.getPassword());
             existingDoctor.setAvailableFrom(doctorDetails.getAvailableFrom());
             existingDoctor.setAvailableTo(doctorDetails.getAvailableTo());
@@ -59,15 +63,24 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public Optional<Doctor> findByEmailAndName(String email ,String name) {
-        return doctorRepository.findByEmailAndName(email,name);
+    public Optional<Doctor> findByEmailAndDoctorName(String email ,String doctorName) {
+        return doctorRepository.findByEmailAndDoctorName(email,doctorName);
     }
-    public  Boolean auth (String email ,String rawPassword ,String name){
-        Optional<Doctor> doctorOptional=doctorRepository.findByEmailAndName(email ,name);
+    public  Boolean auth (String email ,String rawPassword ,String doctorName){
+        Optional<Doctor> doctorOptional=doctorRepository.findByEmailAndDoctorName(email ,doctorName);
         if(doctorOptional.isPresent()){
             Doctor doctor= doctorOptional.get();
             return passwordEncoder.matches(rawPassword,doctor.getPassword());
         }
         return false;
     }
+
+    public List<Appointment> getDoctorNameAndSpecializationDoctor(String doctorName, String specializationDoctor) {
+        return  appointmentRepository.findByDoctorNameAndSpecializationDoctor(doctorName,specializationDoctor);
+
+    }
+
+
+
+
 }

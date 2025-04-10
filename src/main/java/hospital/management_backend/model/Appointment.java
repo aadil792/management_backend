@@ -16,7 +16,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Auto-incremented ID
     private Long id;
-    private String DoctorName;
+    private String doctorName;
     private String specializationDoctor;
     private LocalDate date;
     private LocalTime time;
@@ -30,7 +30,7 @@ public class Appointment {
 
     public Appointment(Long id , String doctorName , String specializationDoctor , LocalDate date , LocalTime time , String fullName , String number , String textArea) {
         this.id = id;
-        DoctorName = doctorName;
+        this.doctorName = doctorName;
         this.specializationDoctor = specializationDoctor;
         this.date = date;
         this.time = time;
@@ -48,11 +48,11 @@ public class Appointment {
     }
 
     public String getDoctorName() {
-        return DoctorName;
+        return doctorName;
     }
 
     public void setDoctorName(String doctorName) {
-        DoctorName = doctorName;
+       this.doctorName = doctorName;
     }
 
     public String getSpecializationDoctor() {
