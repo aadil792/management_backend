@@ -2,7 +2,6 @@ package hospital.management_backend.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -12,8 +11,8 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String speciality;
+    private String doctorName;
+    private String specializationDoctor;
     private String email;
     private String password;
     private LocalTime availableFrom;
@@ -22,10 +21,10 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Long id , String name , String speciality , String email , String password , LocalTime availableTo , LocalTime availableFrom) {
+    public Doctor(Long id , String doctorName , String specializationDoctor , String email , String password , LocalTime availableTo , LocalTime availableFrom) {
         this.id = id;
-        this.name = name;
-        this.speciality = speciality;
+        this.doctorName = doctorName;
+        this.specializationDoctor = specializationDoctor;
         this.email = email;
         this.password = password;
         this.availableFrom = availableFrom;
@@ -36,20 +35,20 @@ public class Doctor {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getDoctorName() {
+        return doctorName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getSpecializationDoctor() {
+        return specializationDoctor;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setSpecializationDoctor(String specializationDoctor) {
+        this.specializationDoctor = specializationDoctor;
     }
 
     public String getEmail() {
