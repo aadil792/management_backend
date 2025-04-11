@@ -1,7 +1,7 @@
 package hospital.management_backend.service;
 
-import hospital.management_backend.model.Patient;
-import hospital.management_backend.repository.PatientRepository;
+import hospital.management_backend.model.UserAppointment;
+import hospital.management_backend.repository.UserAppointmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,37 +10,39 @@ import java.util.Optional;
 @Service
 public class PatientServiceImp implements PatientService {
 
-    private final PatientRepository patientRepository;
+    private final UserAppointmentRepository patientRepository;
 
-    public PatientServiceImp(PatientRepository patientRepository) {
+    public PatientServiceImp(UserAppointmentRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
 
     @Override
-    public Patient addPatient(Patient patient) {
+    public UserAppointment addPatient(UserAppointment patient) {
         return patientRepository.save(patient);
     }
 
     @Override
-    public List<Patient> getAllPatients() {
+    public List<UserAppointment> getAllPatients() {
         return patientRepository.findAll();
     }
 
+
     @Override
-    public Patient getPatientById(Long id) {
+    public UserAppointment getById(Long id) {
         return patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found with ID: " + id));
     }
 
     @Override
-    public Patient updatePatient(Long id, Patient patientDetails) {
-        Optional<Patient> optionalPatient = patientRepository.findById(id);
+    public UserAppointment updatePatient(Long id , UserAppointment patientDetails) {
+        Optional<UserAppointment> optionalPatient = patientRepository.findById(id);
         if (optionalPatient.isPresent()) {
-            Patient existingPatient = optionalPatient.get();
-            existingPatient.setName(patientDetails.getName());
-            existingPatient.setAge(patientDetails.getAge());
+            UserAppointment existingPatient = optionalPatient.get();
+            existingPatient.setFullName(patientDetails.getFullName());
+            existingPatient.setDate(patientDetails.getDate());
+            existingPatient.setTime(patientDetails.getTime());
             existingPatient.setDisease(patientDetails.getDisease());
-            existingPatient.setRequireDoctor(patientDetails.getRequireDoctor());
+            existingPatient.setDoctorName(patientDetails.getDoctorName());
             return patientRepository.save(existingPatient);
         } else {
             throw new RuntimeException("Patient not found with ID: " + id);
@@ -48,7 +50,31 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public void deletePatient(Long id) {
+    public void deleteById(Long id) {
         patientRepository.deleteById(id);
     }
+
+    @Override
+    public UserAppointment updatePrescription(Long id , String Prescription) {
+        Optional<UserAppointment> optionalAppointment = patientRepository.findById(id);
+        if (optionalAppointment.isPresent()) {
+            UserAppointment appointment = optionalAppointment.get();
+            appointment.setPrescription(Prescription);
+            return patientRepository.save(appointment);
+        } else {
+            throw new RuntimeException("Appointment prescription not found" + id);
+        }
+    }
+
+    @Override
+    public List<UserAppointment> getAllList() {
+        return patientRepository.findAll();
+    }
+
+    @Override
+    public Optional<UserAppointment> getAppointmentById(Long id) {
+        return patientRepository.findById(id);
+    }
+
+
 }

@@ -2,6 +2,7 @@ package hospital.management_backend.controller;
 
 import hospital.management_backend.model.Appointment;
 import hospital.management_backend.model.Doctor;
+import hospital.management_backend.model.UserAppointment;
 import hospital.management_backend.service.DoctorServiceImp;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ public class DoctorController {
             session.setAttribute("user", doctorOpt.get());
             return ResponseEntity.ok("Login successful");
         }
-
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 
@@ -73,7 +73,17 @@ public class DoctorController {
         if (doctor == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Doctor not logged in");
         }
-        List<Appointment> appointments = doctorServiceImp.getDoctorNameAndSpecializationDoctor(doctor.getDoctorName() ,
+        List<Appointment> appointments = doctorServiceImp.getDoctorNameAndSpecializationDoctor(doctor.getDoctorName(),
+                doctor.getSpecializationDoctor());
+        return ResponseEntity.ok(appointments);
+    }
+    @GetMapping("/userAppointment")
+    public ResponseEntity<?> getAppointment(HttpSession session) {
+        Doctor doctor = (Doctor) session.getAttribute("user");
+        if (doctor == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Doctor not logged in");
+        }
+        List<UserAppointment> appointments = doctorServiceImp.getByDoctorDetails(
                 doctor.getSpecializationDoctor());
         return ResponseEntity.ok(appointments);
     }

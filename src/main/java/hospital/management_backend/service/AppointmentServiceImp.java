@@ -2,6 +2,7 @@ package hospital.management_backend.service;
 
 import hospital.management_backend.model.Appointment;
 import hospital.management_backend.repository.AppointmentRepository;
+import jdk.jfr.Description;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,20 @@ public class AppointmentServiceImp implements AppointmentService {
     public Optional<Appointment> getById(Long id) {
         return appointmentRepository.findById(id);
     }
+
+    @Override
+    public Appointment updatePrescription(Long id , String Prescription) {
+        Optional<Appointment> optionalAppointment =appointmentRepository.findById(id);
+        if(optionalAppointment.isPresent()){
+            Appointment appointment=optionalAppointment.get();
+            appointment.setPrescription(Prescription);
+            return  appointmentRepository.save(appointment);
+        }
+        else {
+            throw  new RuntimeException("Appointment prescription not found"+id);
+        }
+    }
+
 
 
 }

@@ -16,7 +16,6 @@ public class AppointmentController {
     @Autowired
     private AppointmentServiceImp services;
 
-
     @PostMapping("/saveAppointment")
     ResponseEntity<Appointment> save(@RequestBody Appointment appointment) {
         Appointment done = services.create(appointment);
@@ -37,6 +36,11 @@ public class AppointmentController {
     public ResponseEntity<Appointment> update (@RequestParam Long id ,@RequestBody Appointment appointment){
         Appointment up= services.update(id ,appointment);
         return ResponseEntity.ok(up);
+    }
+    @PutMapping("/prescription")
+    public  ResponseEntity<Appointment>prescription(@RequestParam Long id ,@RequestBody  Appointment prescription){
+        Appointment prescriptionUp=services.updatePrescription(prescription.getId(),prescription.getPrescription());
+        return ResponseEntity.ok(prescriptionUp);
     }
     @GetMapping("/get/{id}")
     public Appointment getById(@PathVariable Long id){

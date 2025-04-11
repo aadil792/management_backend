@@ -1,13 +1,18 @@
 package hospital.management_backend.service;
 
-import hospital.management_backend.model.Patient;
+import hospital.management_backend.model.Appointment;
+import hospital.management_backend.model.UserAppointment;
 import java.util.List;
+import java.util.Optional;
 
 public interface PatientService {
-    Patient addPatient(Patient patient);
-    List<Patient> getAllPatients();
-    Patient getPatientById(Long id);
-    Patient updatePatient(Long id, Patient patientDetails);
-    void deletePatient(Long id);
+    UserAppointment addPatient(UserAppointment patient);
+    List<UserAppointment> getAllPatients();
+    UserAppointment getById(Long id);
+    UserAppointment updatePatient(Long id, UserAppointment patientDetails);
+    void deleteById(Long id);
+    UserAppointment updatePrescription ( Long id, String Prescription);
+    List<UserAppointment> getAllList();
+    Optional<UserAppointment> getAppointmentById(Long id);
 }
 

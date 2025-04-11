@@ -13,7 +13,7 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
-    private String name;
+    private String fullName;
     private String password;
     private String address;
     private String phone;
@@ -21,11 +21,11 @@ public class UserAccount {
     public UserAccount() {
     }
 
-    public UserAccount(String phone , String address , String password , String name , String email , long id) {
+    public UserAccount(String phone , String address , String password , String fullName , String email , long id) {
         this.phone = phone;
         this.address = address;
         this.password = password;
-        this.name = name;
+        this.fullName = fullName;
         this.email = email;
         this.id = id;
     }
@@ -46,12 +46,12 @@ public class UserAccount {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPassword() {
@@ -83,7 +83,7 @@ public class UserAccount {
         return "UserAccount{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
+                ", name='" + fullName + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
