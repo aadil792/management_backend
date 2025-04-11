@@ -5,13 +5,11 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
-
 @Entity
-public class Appointment {
 
+public class UserAppointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String doctorName;
     private String specializationDoctor;
@@ -20,14 +18,15 @@ public class Appointment {
     private String fullName;
     private String number;
     private String textArea;
+    private String disease;
     @Lob
     @Column(length = 10000)
-   private String prescription;
+    private String prescription;
 
-    public Appointment() {
+    public UserAppointment() {
     }
 
-    public Appointment(Long id , String	prescription , String doctorName , String specializationDoctor , LocalDate date , LocalTime time , String fullName , String number , String textArea) {
+    public UserAppointment(Long id , String disease ,String doctorName , String specializationDoctor , LocalDate date , LocalTime time , String fullName , String number , String textArea , String prescription) {
         this.id = id;
         this.doctorName = doctorName;
         this.specializationDoctor = specializationDoctor;
@@ -36,7 +35,8 @@ public class Appointment {
         this.fullName = fullName;
         this.number = number;
         this.textArea = textArea;
-        this.prescription=prescription;
+        this.prescription = prescription;
+        this.disease=disease;
     }
 
     public Long getId() {
@@ -47,20 +47,20 @@ public class Appointment {
         this.id = id;
     }
 
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
+
     public String getDoctorName() {
         return doctorName;
     }
 
-    public String getPrescription() {
-        return prescription;
-    }
-
-    public void setPrescription(String prescription) {
-        this.prescription = prescription;
-    }
-
     public void setDoctorName(String doctorName) {
-       this.doctorName = doctorName;
+        this.doctorName = doctorName;
     }
 
     public String getSpecializationDoctor() {
@@ -109,5 +109,13 @@ public class Appointment {
 
     public void setTextArea(String textArea) {
         this.textArea = textArea;
+    }
+
+    public String getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
     }
 }

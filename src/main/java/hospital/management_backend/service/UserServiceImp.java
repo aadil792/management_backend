@@ -1,11 +1,14 @@
 package hospital.management_backend.service;
 
 import hospital.management_backend.model.UserAccount;
+import hospital.management_backend.model.UserAppointment;
 import hospital.management_backend.repository.UserAccountRepository;
+import hospital.management_backend.repository.UserAppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,22 +18,25 @@ public class UserServiceImp implements UserAccountService {
     private UserAccountRepository repo;
 
     @Autowired
+    private UserAppointmentRepository userAppointmentRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public UserAccount create(UserAccount userAccount) {
-        userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword())); // Encrypt password
+        userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         return repo.save(userAccount);
     }
 
     @Override
-    public String deleteByEmail(String email, String rawPassword) {
+    public String deleteByEmail(String email , String rawPassword) {
         Optional<UserAccount> userOptional = repo.findByEmail(email);
 
         if (userOptional.isPresent()) {
             UserAccount user = userOptional.get();
 
-            if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+            if (passwordEncoder.matches(rawPassword , user.getPassword())) {
                 repo.delete(user);
                 return "User deleted successfully";
             } else {
@@ -47,7 +53,7 @@ public class UserServiceImp implements UserAccountService {
     }
 
     @Override
-    public UserAccount updateByEmail(String mail, UserAccount updateUser) {
+    public UserAccount updateByEmail(String mail , UserAccount updateUser) {
         Optional<UserAccount> existingUser = repo.findByEmail(mail);
 
         if (existingUser.isPresent()) {
@@ -56,19 +62,23 @@ public class UserServiceImp implements UserAccountService {
             if (updateUser.getPassword() != null && !updateUser.getPassword().isEmpty()) {
                 user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
             }
-
             return repo.save(user);
         } else {
             throw new RuntimeException("Email not found: " + mail);
         }
     }
 
-    public boolean authenticate(String mail, String rawPassword) {
+    public boolean authenticate(String mail , String rawPassword) {
         Optional<UserAccount> userOptional = repo.findByEmail(mail);
         if (userOptional.isPresent()) {
             UserAccount user = userOptional.get();
-            return passwordEncoder.matches(rawPassword, user.getPassword());
+            return passwordEncoder.matches(rawPassword , user.getPassword());
         }
         return false;
     }
+
+    public List<UserAppointment> getFullName(String fullName) {
+        return userAppointmentRepository.findByFullName(fullName);
+    }
+
 }

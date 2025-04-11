@@ -27,7 +27,7 @@ public class Config {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) // Allow sessions!
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/**", "/appointment/**","/doctors/**" ).permitAll()
+                        .requestMatchers("/user/**", "/appointment/**","/doctors/**","/patients/**" ).permitAll()
                         .requestMatchers("/user/get-name").authenticated()
                         .anyRequest().authenticated()
                 )
